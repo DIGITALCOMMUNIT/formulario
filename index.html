@@ -17,7 +17,7 @@
 	<div class="container">
         <a href="ingles.html" class="boton"Ingles>Ingles</a>
 		<h1>Restaurant español</h1>
-		<form action="https://formsubmit.co/ai.bryan.auto@gmail.com" method="post">
+		<form action="" method="post">
 			<label for="name">nombre:</label>
 			<input type="text" id="name" name="name" required>
 
@@ -82,6 +82,33 @@
 
 
   <script src="java.js"></script>
+	
+	
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script>
+  document.getElementById("survey-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  var name = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+  var experience = document.getElementById("experience").value;
+  var foodQuality = document.getElementById("food-quality").value;
+  var service = document.getElementById("service").value  ;
+  var atmosphere = document.getElementById("atmosphere").value;
+  var recommendation = document.querySelector('input[name="recommendation"]:checked').value;
+  var comments = document.getElementById("comments").value;
+  
+  Email.send({
+  SecureToken: "TU_SECURE_TOKEN",
+  To: "ai.bryan.auto@gmail.com",
+  From: "ai.bryan.auto@gmail.com",
+  Subject: "Encuesta de Restaurante",
+  Body: "Nombre: " + name + "<br>Correo Electrónico: " + email + "<br>Experiencia General: " + experience + "<br>Calidad de la Comida: " + foodQuality + "<br>Servicio: " + service + "<br>Ambiente: " + atmosphere + "<br>¿Recomendaría nuestro restaurante a otros?: " + recommendation + "<br>Comentarios Adicionales: " + comments
+  }).then(
+  message => alert("¡Gracias por completar la encuesta!")
+  );
+  });
+  </script>
+  
   
 
 </html>

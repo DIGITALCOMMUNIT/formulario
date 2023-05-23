@@ -24,7 +24,7 @@ document.getElementById("survey-form").addEventListener("submit", function(event
   var comments = document.getElementById("comments").value;
   
   Email.send({
-  SecureToken: "TU_SECURE_TOKEN",
+  SecureToken: "ec2346f8-bf0a-402a-ac65-f1c0f3a25b17",
   To: "ai.bryan.auto@gmail.com",
   From: "ai.bryan.auto@gmail.com",
   Subject: "Encuesta de Restaurante",

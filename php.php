@@ -2,41 +2,56 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php';
+require 'ruta_hacia_PHPMailer/Exception.php';
+require 'ruta_hacia_PHPMailer/PHPMailer.php';
+require 'ruta_hacia_PHPMailer/SMTP.php';
 
-// Recuperar los datos del formulario
-$nombre = $_POST['name'];
-$email = $_POST['email'];
-$experiencia = $_POST['experience'];
-$calidad_comida = $_POST['food-quality'];
-$servicio = $_POST['service'];
-$ambiente = $_POST['atmosphere'];
-$recomendacion = $_POST['recommendation'];
-$comentarios = $_POST['comments'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Obtén los datos de la encuesta
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $experience = $_POST['experience'];
+  $foodQuality = $_POST['food-quality'];
+  $service = $_POST['service'];
+  $atmosphere = $_POST['atmosphere'];
+  $recommendation = $_POST['recommendation'];
+  $comments = $_POST['comments'];
 
-// Crear una nueva instancia de PHPMailer
-$mail = new PHPMailer(true);
+  // Configura la información del correo electrónico
+  $to = 'tucorreo@example.com';
+  $subject = 'Respuestas de la encuesta';
 
-try {
-    // Configurar el servidor SMTP
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'ai.bryan.auto@gmail.com';
-    $mail->Password = 'anryb2323';
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587;
+  // Construye el contenido del correo electrónico
+  $message = "Nombre: $name\n";
+  $message .= "Email: $email\n";
+  $message .= "Overall Experience: $experience\n";
+  $message .= "Food Quality: $foodQuality\n";
+  $message .= "Service: $service\n";
+  $message .= "Atmosphere: $atmosphere\n";
+  $message .= "Would you recommend us to others? $recommendation\n";
+  $message .= "Additional Comments:\n$comments\n";
 
-    // Configurar el correo electrónico
-    $mail->setFrom('ai.beyan.auto@gmail.com', 'prueva');
-    $mail->addAddress('digitalcommunity3@gmail.com', 'Destinatario');
-    $mail->Subject = 'Respuestas de la encuesta del restaurante';
-    $mail->Body = "Nombre: $nombre\nEmail: $email\nExperiencia general: $experiencia\nCalidad de la comida: $calidad_comida\nServicio: $servicio\nAmbiente: $ambiente\n¿Recomendaría nuestro restaurante?: $recomendacion\nComentarios adicionales:\n$comentarios";
+  // Configura PHPMailer
+  $mail = new PHPMailer();
+  $mail->isSMTP();
+  $mail->Host = 'smtp.gmail.com';
+  $mail->Port = 587;
+  $mail->SMTPAuth = true;
+  $mail->Username = 'ai.bryan.auto@gmail.com';
+  $mail->Password = 'anryb2323';
 
-    // Enviar el correo electrónico
-    $mail->send();
-    echo 'El correo electrónico ha sido enviado.';
-} catch (Exception $e) {
-    echo 'El correo electrónico no pudo ser enviado. Error: ', $mail->ErrorInfo;
+  // Configura los detalles del mensaje
+  $mail->setFrom('ai.bryan.auto@gmail.com', 'Tu Nombre');
+  $mail->addAddress($to);
+  $mail->Subject = $subject;
+  $mail->Body = $message;
+
+  // Envía el correo electrónico
+  if ($mail->send()) {
+    echo "Gracias por completar la encuesta. Tus respuestas han sido enviadas.";
+  } else {
+    echo "Ha ocurrido un error al enviar las respuestas de la encuesta: " . $mail->ErrorInfo;
+  }
 }
 ?>
+
